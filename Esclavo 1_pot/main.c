@@ -43,7 +43,7 @@ void setup(void){
 	DDRC =0;  //Puerto C como entrada
 	initADC(); //Iniciar ADC
 	
-	I2C_Config_SLAVE(0x02);
+	I2C_Config_SLAVE();
 	sei(); //Activar interrupciones
 }
 void Interfaz(void);

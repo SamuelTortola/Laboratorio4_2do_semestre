@@ -43,7 +43,7 @@ void setup(void){
 	cli();  //Apagar interrupciones
 	DDRC =0;  //Puerto C como entrada
 	initADC(); //Iniciar ADC
-
+	I2C_inicio();
 	
 	sei(); //Activar interrupciones
 }

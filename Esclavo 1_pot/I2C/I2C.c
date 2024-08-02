@@ -137,7 +137,7 @@ uint8_t I2C_READ(uint8_t *dato, uint8_t ack){
 
 
 void I2C_esclavo(uint8_t dato){   //Envia el dato al esclavo
-	esclavo = 0x02;  //Dirección del esclavo
+	esclavo = 0x03;  //Dirección del esclavo
 	esclavo = esclavo << 1;    //Compone la SLA+W
 	
 	

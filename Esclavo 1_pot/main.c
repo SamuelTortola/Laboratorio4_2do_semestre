@@ -32,7 +32,6 @@
 /////////////////////////////////////////////
 
 uint8_t datoADC = 0;
-uint8_t dir = 0x02; //Direccion del esclavo
 /////////////////////////////////////////////
 //Sub-Rutinas
 /////////////////////////////////////////////
@@ -44,11 +43,7 @@ void setup(void){
 	DDRC =0;  //Puerto C como entrada
 	initADC(); //Iniciar ADC
 	
-	dir <<= 1;  //Ubica la direcci?n y
-	dir |= 0x01; //habilita para reconocer las llamadas generales de I2C
-	TWAR = dir;
-	
-	TWCR=(1 << TWEA) | (1<< TWEN) | (1 << TWIE);
+	I2C_Config_SLAVE(0x02);
 	sei(); //Activar interrupciones
 }
 void Interfaz(void);

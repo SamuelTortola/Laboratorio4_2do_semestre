@@ -1,4 +1,5 @@
-#include "I2C.h"#include "I2C.h"
+#include "I2C.h"
+
 
 uint8_t esclavo, dato, aux;
 
@@ -6,7 +7,7 @@ uint8_t esclavo, dato, aux;
 
 
 //********Datos a saber*****************
-    //SLA = direcci?n del esclavo
+    //SLA = dirección del esclavo
 	
 	
 	
@@ -52,10 +53,20 @@ void I2C_Config_MASTER(uint8_t Prescaler, unsigned long SCL_Clock){
 	TWCR = 1 << TWEN;   //Habilita la interfaz
 }
 
+void I2C_Config_SLAVE(uint8_t address){
+	DDRC &= ~((1<<DDC4) | (1<<DDC5));
+	
+	address <<= 1;  //Ubica la dirección y
+	address |= 0x01; //habilita para reconocer las llamadas generales de I2C
+	TWAR = address;
+	
+	TWCR = (1 << TWEA) | (1 << TWEN) | (1 << TWIE); //Habilita el BUS, con reconocimiento e interrupción
+}
+
 
 uint8_t I2C_inicio(){
-	uint8_t edo;  //Variable que indica que no se consigui? el bus 
-	TWCR = (1 << TWINT) | (1 << TWEN) | (1 << TWSTA); //Condici?n de inicio
+	uint8_t edo;  //Variable que indica que no se consiguió el bus 
+	TWCR = (1 << TWINT) | (1 << TWEN) | (1 << TWSTA); //Condición de inicio
 	while (!(TWCR & (1 << TWINT)));  //Espera la bandera TWINT
 	edo = TWSR & 0xF8; //Obtiene el estado, 1 condicion de inicio, o 2 inicio repetido
 	
@@ -83,17 +94,17 @@ uint8_t I2C_EscByte(uint8_t dato){
 	while (!(TWCR & (1 << TWINT))); //espera la bandera TWINT
 	edo = TWSR & 0xF8; //Obtiene el estado
 	
-	    //Hay 3 posibilidades de ?xito:
-	if (edo == 0x18 || edo == 0x28 || edo == 0x40)  //Transmiti? una SLA+W CON ACK, transimiti? una SLA+R con ACK, Transmiti? un dato con ACK
+	    //Hay 3 posibilidades de éxito:
+	if (edo == 0x18 || edo == 0x28 || edo == 0x40)  //Transmitió una SLA+W CON ACK, transimitió una SLA+R con ACK, Transmitió un dato con ACK
 	{
 		return 0x01;
 	}
-	return edo;   //So hay alg?n error
+	return edo;   //So hay algún error
 	
 }
 
 void I2C_STOP(){
-	TWCR = (1 << TWINT) | (1 << TWEN) | (1 << TWSTO);  //Condici?n de Paro
+	TWCR = (1 << TWINT) | (1 << TWEN) | (1 << TWSTO);  //Condición de Paro
 	while (TWCR & (1 << TWSTO));  //El bit se limpia por HW
 }
 
@@ -125,27 +136,27 @@ uint8_t I2C_READ(uint8_t *dato, uint8_t ack){
 
 
 
-void I2C_esclavo(uint8_t dato){
-	esclavo = 0x03;  //Direcci?n del esclavo
+void I2C_esclavo(uint8_t dato){   //Envia el dato al esclavo
+	esclavo = 0x03;  //Dirección del esclavo
 	esclavo = esclavo << 1;    //Compone la SLA+W
 	
 	
 	aux = I2C_inicio();   //Condicion de inicio
-	if (aux != 0x01)  //Si no se establece la conexi?n
+	if (aux != 0x01)  //Si no se establece la conexión
 	{
 		TWCR |= (1 << TWINT);  //Borrar la bandera
 		return;   //No continua
 	}
 	
 	aux = I2C_EscByte(esclavo);     //Direcciona con la SLA+W
-	if (aux != 0x01)   //Si hay algun error de comunicaci?n
+	if (aux != 0x01)   //Si hay algun error de comunicación
 	{
-		I2C_STOP();  //No continua, termina la comunicaci?n y la cierra
+		I2C_STOP();  //No continua, termina la comunicación y la cierra
 		return;   
 	}
 	
 	I2C_EscByte(dato);   //Envia el dato al esclavo
-	I2C_STOP();  //No continua, termina la comunicaci?n y la cierra
+	I2C_STOP();  //No continua, termina la comunicación y la cierra
 	
 	
 }

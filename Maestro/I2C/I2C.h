@@ -6,7 +6,7 @@
 #include <stdbool.h>
 #define F_CPU 16000000
 
- void I2C_Config(uint8_t Prescaler, unsigned long SCL_Clock);
+ void I2C_Config_MASTER(uint8_t Prescaler, unsigned long SCL_Clock);
  void I2C_esclavo(uint8_t dato);
  uint8_t I2C_inicio();
  uint8_t I2C_EscByte(uint8_t dato);

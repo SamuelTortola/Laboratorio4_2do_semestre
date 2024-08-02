@@ -21,7 +21,7 @@ uint8_t esclavo, dato, aux;
 	
 	
 	
-void I2C_Config(uint8_t Prescaler, unsigned long SCL_Clock){
+void I2C_Config_MASTER(uint8_t Prescaler, unsigned long SCL_Clock){
 	DDRC &= ~((1<<DDC4) | (1<<DDC5));
 	
 	TWBR = ((F_CPU/SCL_Clock)-16)/(2*Prescaler);
@@ -107,7 +107,7 @@ uint8_t I2C_READ(uint8_t *dato, uint8_t ack){
 	}
 	
 	else{
-		TWCR &= ~(1 << TWEA); //Lectura con nACK
+		TWCR &= ~(1 << TWEA); //Lectura sin ACK
 	}
 	
 	TWCR |= (1 <<TWINT); //Inicia la lectura

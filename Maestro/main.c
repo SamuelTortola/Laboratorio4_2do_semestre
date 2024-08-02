@@ -36,7 +36,7 @@ void setup(void){
 	Lcd_Init8bits();   //Iniciar pantalla LCD
 	Lcd_Clear();
 	
-	I2C_Config();
+	I2C_Config_MASTER(4, 200000); //Configurar como maestro, enviar Prescaler y frecuencia a trabajar
 	
 	sei(); //Activar interrupciones
 }

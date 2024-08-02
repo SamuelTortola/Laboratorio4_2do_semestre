@@ -23,7 +23,7 @@
 #include "LCD/LCD.h"     //Incluir libreria de LCD
 
 
-
+uint8_t i =0;
 void setup(void);
 void setup(void){
 	cli();  //Apagar interrupciones
@@ -36,6 +36,8 @@ void setup(void){
 	Lcd_Init8bits();   //Iniciar pantalla LCD
 	Lcd_Clear();
 	
+	I2C_Config();
+	
 	sei(); //Activar interrupciones
 }
 
@@ -46,8 +48,11 @@ int main(void)
     while (1) 
     {
 		  Lcd_Write_String("Hola UVG");
-		  _delay_ms(100);
+		  _delay_ms(1000);
 		  Lcd_Clear();
+		  I2C_esclavo(i);
+		  _delay_ms(1000);
+		  i++;
 		
 		
     }

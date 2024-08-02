@@ -1,95 +1,135 @@
 #include "I2C.h"
 
- void I2C_Init(){
 
+uint8_t esclavo, dato, aux;
+
+
+
+
+//********Datos a saber*****************
+    //SLA = dirección del esclavo
+	
+	
+	
 	/////// Setting frequency ///////
 	/*
 		F = 	CPUclk/(16 + (2*TWBR*Prescaler))
 		F =		20000/(16 + 2*42*1)
 		F =		200kHz
 	*/
-
-	//Prescaler
-	TWSR &=~ (1<<TWPS0);
-	TWSR &=~ (1<<TWPS1);
-
-	//factor divisor
-	TWBR = 17;
-
-	/////// I2C POWER ON ///////
-	PRR	 &=~ (1<<PRI2C);
-
- }
-
- bool I2C_startCond(){
-	TWCR = ((1<<I2CNT) | (1<<TWSTA) | (1<<TWEN));
-
-	while(!(TWCR & (1<<I2CNT)));
-
-	if ((TWSR & 0xF8) == I2C_START)
-		return false;
-
-	return true;
- }
-
- bool I2C_restrtCond(){
-   TWCR = ((1<<I2CNT) | (1<<TWSTA) | (1<<TWEN));
-
-   while(!(TWCR & (1<<I2CNT)));
-
-   if ((TWSR & 0xF8) == I2C_RESTART)
-	  return false;
-
-   return true;
- }
-
- void I2C_stopCond(){
-	TWCR |= ((1<<I2CNT) | (1<<TWSTO) | (1<<TWEN));
- }
-
- bool I2C_sendAdrr(uint8_t adrr, uint8_t action){
 	
-	uint8_t cmp = 0;
-	adrr = (adrr << 1 );
-
-	if (action == I2C_W){
-		adrr &=~ 1;
-		cmp = I2C_WT_SLA_ACK;
+	
+	
+	
+void I2C_Config(uint8_t Prescaler){
+	
+	TWBR = 0x02; //Frecuencia del MCU entre 20
+	//TWSR = 0x00;  //Factor de prescales en 1
+	
+	switch(Prescaler){
+		case 1:
+			TWSR &= ~((1<<TWPS1) | (1<<TWPS0));
+			break;
+		case 4:
+			
 	}
+	TWCR = 1 << TWEN;   //Habilita la interfaz
+}
+
+
+uint8_t I2C_inicio(){
+	uint8_t edo;  //Variable que indica que no se consiguió el bus 
+	TWCR = (1 << TWINT) | (1 << TWEN) | (1 << TWSTA); //Condición de inicio
+	while (!(TWCR & (1 << TWINT)));  //Espera la bandera TWINT
+	edo = TWSR & 0xF8; //Obtiene el estado, 1 condicion de inicio, o 2 inicio repetido
+	
+	if (edo == 0x08 || edo == 0x10) 
+	{
+		return 0x01;
+	}
+	
+	return edo;  
+	
+}
+
+
+
+//I2C_EscByte: Escribe un dato o una SLA + W/R por el bus
+//Recibe: El dato de 8 bits a enviar
+//Regresa: 0x01 envio sin problemas, edo, si el dato no se envio como se esperaba
+
+uint8_t I2C_EscByte(uint8_t dato){
+	uint8_t edo;
+	
+	TWDR = dato;      //Carga el dato   
+	TWCR = (1 << TWEN) | (1 << TWINT);   //Inicia el envio
+	
+	while (!(TWCR & (1 << TWINT))); //espera la bandera TWINT
+	edo = TWSR & 0xF8; //Obtiene el estado
+	
+	    //Hay 3 posibilidades de éxito:
+	if (edo == 0x18 || edo == 0x28 || edo == 0x40)  //Transmitió una SLA+W CON ACK, transimitió una SLA+R con ACK, Transmitió un dato con ACK
+	{
+		return 0x01;
+	}
+	return edo;   //So hay algún error
+	
+}
+
+void I2C_STOP(){
+	TWCR = (1 << TWINT) | (1 << TWEN) | (1 << TWSTO);  //Condición de Paro
+	while (TWCR & (1 << TWSTO));  //El bit se limpia por HW
+}
+
+uint8_t I2C_READ(uint8_t *dato, uint8_t ack){
+	uint8_t edo;
+	
+	if (ack)
+	{
+		TWCR |= (1 << TWEA); //Lectura con ACK
+	}
+	
 	else{
-		adrr |= 1;
-		cmp = I2C_RD_SLA_ACK;
+		TWCR &= ~(1 << TWEA); //Lectura con nACK
 	}
-
-	TWDR = adrr;
-	TWCR = ((1<<I2CNT) | (1<<TWEN));
-
-	while(!(TWCR & (1<<I2CNT)));
-
-	if ((TWSR & 0xF8) == cmp)
-		return false;
-	 
-	return true;
- }
-
- bool I2C_write(uint8_t data2write){
 	
-	bool ret = true;
+	TWCR |= (1 <<TWINT); //Inicia la lectura
+	while (!(TWCR & (1 << TWINT))); //Espera la bandera TWINT
+	edo = TWSR & 0xF8;   //Obtiene el estado
 	
-	TWDR = data2write;
-	TWCR = ((1<<I2CNT) | (1<<TWEN));
-	while(!(TWCR & (1<<I2CNT)));
+	if (edo == 0x58 || edo == 0x50)  //Dato leido con ACK, dato leido con nACK
+	{
+		*dato = TWDR;//Ubica el dato leido
+		return 0x01;
+	}
 	
-	if ((TWSR & 0xF8) == I2C_MT_DATA_ACK)
-		ret = false;
+	return edo;    //Si hay algun error
 	
-	return ret;
- }
+}
 
- uint8_t I2C_read(uint8_t ACK_NACK){
-	
-	TWCR = ((1 << I2CNT) | (1 << TWEN) | (ACK_NACK << TWEA));
 
-	while(!(TWCR & (1<<I2CNT)));
-	return TWDR;
- }
+
+void I2C_esclavo(uint8_t dato){
+	esclavo = 0x03;  //Dirección del esclavo
+	esclavo = esclavo << 1;    //Compone la SLA+W
+	
+	
+	aux = I2C_inicio();   //Condicion de inicio
+	if (aux != 0x01)  //Si no se establece la conexión
+	{
+		TWCR |= (1 << TWINT);  //Borrar la bandera
+		return;   //No continua
+	}
+	
+	aux = I2C_EscByte(esclavo);     //Direcciona con la SLA+W
+	if (aux != 0x01)   //Si hay algun error de comunicación
+	{
+		I2C_STOP();  //No continua, termina la comunicación y la cierra
+		return;   
+	}
+	
+	I2C_EscByte(dato);   //Envia el dato al esclavo
+	I2C_STOP();  //No continua, termina la comunicación y la cierra
+	
+	
+}

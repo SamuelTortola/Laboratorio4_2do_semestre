@@ -21,18 +21,35 @@ uint8_t esclavo, dato, aux;
 	
 	
 	
-void I2C_Config(uint8_t Prescaler){
+void I2C_Config(uint8_t Prescaler, unsigned long SCL_Clock){
+	DDRC &= ~((1<<DDC4) | (1<<DDC5));
 	
-	TWBR = 0x02; //Frecuencia del MCU entre 20
-	//TWSR = 0x00;  //Factor de prescales en 1
+	TWBR = ((F_CPU/SCL_Clock)-16)/(2*Prescaler);
+	
 	
 	switch(Prescaler){
 		case 1:
 			TWSR &= ~((1<<TWPS1) | (1<<TWPS0));
 			break;
 		case 4:
+			TWSR &= ~(1<<TWPS1);
+			TWSR |= (1<<TWPS0);
+			break;
+		case 16:
+			TWSR &= ~(1<<TWPS0);
+			TWSR |= (1<<TWPS1);
+			break;
+			
+		case 64:
+			TWSR |= ~(1<<TWPS1) | (1<<TWPS0);
+			break;
+		default:
+			TWSR &= ~((1<<TWPS1) | (1<<TWPS0));
+			Prescaler = 1;
+			break;
 			
 	}
+	
 	TWCR = 1 << TWEN;   //Habilita la interfaz
 }
 

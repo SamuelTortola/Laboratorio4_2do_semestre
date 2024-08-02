@@ -20,7 +20,7 @@
 
 #include "I2C/I2C.h"   //Incluir libreria de I2C
 
-uint8_t contador = 0;
+int contador = 0;
 
 void setup(void);
 void setup(void){
@@ -54,7 +54,7 @@ ISR(PCINT0_vect){
 	
 	
 	if(((PINB) & (1<<0)) == 0){   //Condicional que compara si se presionó el pulsador 1
-		_delay_ms(20);  //antirrebote
+		_delay_ms(50);  //antirrebote
 		contador ++;
 		
 		if (contador >= 15)
@@ -73,7 +73,7 @@ ISR(PCINT0_vect){
 	}
 	
 	if(((PINB) & (1<<1)) == 0){   //Condicional que compara si se presionó el pulsador  de start
-		_delay_ms(20);  //antirrebote
+		_delay_ms(50);  //antirrebote
 		
 		contador --;
 		

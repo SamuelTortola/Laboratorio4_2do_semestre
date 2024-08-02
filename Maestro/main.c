@@ -5,7 +5,7 @@
 // Proyecto: Laboratorio 3
 // Hardware: Atmega238p
 // Creado: 26/07/2024
-//Última modificación: 29/07/2024
+//Última modificación: 2/07/2024
 //******************************************************************************
   //CODIGO DEL MAESTRO 
 
@@ -17,6 +17,7 @@
 #include <avr/interrupt.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 #include "I2C/I2C.h"   //Incluir libreria de I2C
 #include "LCD/LCD.h"     //Incluir libreria de LCD
@@ -30,7 +31,6 @@ void setup(void){
 	DDRB = 0xFF;  //Puerto B como salida
 	
 	
-
 	UCSR0B = 0;  //Usar los pines TX y RX como digitales
 	
 	Lcd_Init8bits();   //Iniciar pantalla LCD
@@ -45,7 +45,9 @@ int main(void)
    setup();
     while (1) 
     {
-		
+		  Lcd_Write_String("Hola UVG");
+		  _delay_ms(100);
+		  Lcd_Clear();
 		
 		
     }

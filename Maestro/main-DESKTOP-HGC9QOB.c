@@ -24,9 +24,8 @@
 #define ESCLAVO1 0x03  // Dirección del esclavo 1
 #define ESCLAVO2 0x02  // Dirección del esclavo 2
 
-int dato1;
-int dato2;  // Variables para almacenar los datos que envían los esclavos
-char buffer[16];  // Buffer para las cadenas de caracteres a mostrar en el LCD
+uint8_t dato1, dato2;  // Variables para almacenar los datos que envían los esclavos
+char buffer[8];  // Buffer para las cadenas de caracteres a mostrar en el LCD
 
 void setup(void) {
     cli();  // Apagar interrupciones
@@ -38,7 +37,7 @@ void setup(void) {
     Lcd_Init8bits();  // Iniciar pantalla LCD
     Lcd_Clear();
     
-    I2C_Config_MASTER(4, 200000);  // Configurar I2C como maestro, 4 de división de prescaler, a 200kHz de comunicación
+    I2C_Config_MASTER(4, 200);  // Configurar I2C como maestro
     
     sei();  // Activar interrupciones
 }
@@ -46,24 +45,22 @@ void setup(void) {
 int main(void) {
     setup();
     while (1) {
-        _delay_ms(10);   //Pequeño retardo 
+        _delay_ms(10);
         
-        Lcd_Set_Cursor(0, 3);     //Mostrar el menú en la LCD
+        Lcd_Set_Cursor(0, 3);
         Lcd_Write_String("S1:");
         Lcd_Set_Cursor(0, 10);
         Lcd_Write_String("S2:");
         
-        dato1 = I2C_leer_dato(ESCLAVO1, &dato1);   //Leer el dato del esclavo 1
-        dato2 = I2C_leer_dato(ESCLAVO2, &dato2);    //Leer el dato del esclavo 2
+        dato1 = I2C_leer_dato(ESCLAVO1, &dato1);
+        dato2 = I2C_leer_dato(ESCLAVO2, &dato2);
         
         Lcd_Set_Cursor(1, 3);
-        snprintf(buffer, sizeof(buffer), "%03d", dato2);    //Convertir el dato numérico a char para mostrar en la LCD
-	
-		
+        snprintf(buffer, 8, "%d", dato2);
         Lcd_Write_String(buffer);
         
         Lcd_Set_Cursor(1, 10);
-        snprintf(buffer, sizeof(buffer), "%02d", dato1);  //Convertir el dato numérico a char para mostrar en la LCD
+        snprintf(buffer, 8, "%02d", dato1);
         Lcd_Write_String(buffer);
     }
 }

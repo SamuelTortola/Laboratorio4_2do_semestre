@@ -1,7 +1,8 @@
 #include "I2C.h"
 
 
-uint8_t esclavo, dato, aux;
+uint8_t esclavo, aux;
+int dato;
 
 #define SLA_R(address) ((address << 1) | 1)
 
@@ -21,13 +22,13 @@ uint8_t esclavo, dato, aux;
 	
 	
 	
-void I2C_Config_MASTER(uint8_t Prescaler, unsigned long SCL_Clock){
-	DDRC &= ~((1<<DDC4) | (1<<DDC5));
+void I2C_Config_MASTER(uint8_t Prescaler, unsigned long SCL_Clock){   //Iniciar el microcontrolador como maestro
+	DDRC &= ~((1<<DDC4) | (1<<DDC5));          //Puerto SDA  y SCL como entrada, 
 	
-	TWBR = ((F_CPU/SCL_Clock)-16)/(2*Prescaler);
+	TWBR = ((F_CPU/SCL_Clock)-16)/(2*Prescaler);    //Configurar el prescaler
 	
 	
-	switch(Prescaler){
+	switch(Prescaler){    //Varias opciones para configurar el prescaler
 		case 1:
 			TWSR &= ~((1<<TWPS1) | (1<<TWPS0));
 			break;
@@ -53,7 +54,7 @@ void I2C_Config_MASTER(uint8_t Prescaler, unsigned long SCL_Clock){
 	TWCR = 1 << TWEN;   //Habilita la interfaz
 }
 
-void I2C_Config_SLAVE(uint8_t address){
+void I2C_Config_SLAVE(uint8_t address){   //Si se desea configurar el microcontrolador como esclavo
 	DDRC &= ~((1<<DDC4) | (1<<DDC5));
 	
 	address <<= 1;  //Ubica la dirección y
@@ -143,7 +144,7 @@ void I2C_esclavo(uint8_t dato, uint8_t direction){
 
 
 // Lee un byte de datos del esclavo I2C
-uint8_t I2C_leer_dato(uint8_t direccion_esclavo, uint8_t *dato) {
+int I2C_leer_dato(uint8_t direccion_esclavo, int *dato) {
 	// Iniciar condición de START
 	TWCR = (1 << TWSTA) | (1 << TWEN) | (1 << TWINT);
 	while (!(TWCR & (1 << TWINT))); // Esperar a que se complete

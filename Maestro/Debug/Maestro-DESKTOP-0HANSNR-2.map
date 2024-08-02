@@ -28,8 +28,8 @@ d:/programas/microchip studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/g
 Allocating common symbols
 Common symbol       size              file
 
-dato1               0x2               main.o
-dato2               0x2               main.o
+dato1               0x1               main.o
+dato2               0x1               main.o
 aux                 0x1               I2C/I2C.o
 dato                0x2               I2C/I2C.o
 buffer              0x10              main.o
@@ -298,7 +298,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000      0xace
+.text           0x00000000      0xab0
  *(.vectors)
  .vectors       0x00000000       0x68 D:/Programas/Microchip studio/7.0/Packs/Atmel/ATmega_DFP/2.1.506/gcc/dev/atmega328p/avr5/crtatmega328p.o
                 0x00000000                __vector_default
@@ -392,64 +392,64 @@ END GROUP
                 0x0000014a       0x10 I2C/I2C.o
                 0x0000014a                I2C_STOP
  .text.I2C_leer_dato
-                0x0000015a       0x9e I2C/I2C.o
+                0x0000015a       0x90 I2C/I2C.o
                 0x0000015a                I2C_leer_dato
  .text.dato_a_mostrar
-                0x000001f8       0x92 LCD/LCD.o
-                0x000001f8                dato_a_mostrar
- .text.inicio   0x0000028a       0x30 LCD/LCD.o
-                0x0000028a                inicio
+                0x000001ea       0x92 LCD/LCD.o
+                0x000001ea                dato_a_mostrar
+ .text.inicio   0x0000027c       0x30 LCD/LCD.o
+                0x0000027c                inicio
  .text.Lcd_Init8bits
-                0x000002ba       0x6e LCD/LCD.o
-                0x000002ba                Lcd_Init8bits
+                0x000002ac       0x6e LCD/LCD.o
+                0x000002ac                Lcd_Init8bits
  .text.Lcd_Clear
-                0x00000328        0x8 LCD/LCD.o
-                0x00000328                Lcd_Clear
+                0x0000031a        0x8 LCD/LCD.o
+                0x0000031a                Lcd_Clear
  .text.Lcd_Set_Cursor
-                0x00000330       0x1c LCD/LCD.o
-                0x00000330                Lcd_Set_Cursor
+                0x00000322       0x1c LCD/LCD.o
+                0x00000322                Lcd_Set_Cursor
  .text.Lcd_Write_Char
-                0x0000034c       0x30 LCD/LCD.o
-                0x0000034c                Lcd_Write_Char
+                0x0000033e       0x30 LCD/LCD.o
+                0x0000033e                Lcd_Write_Char
  .text.Lcd_Write_String
-                0x0000037c       0x2c LCD/LCD.o
-                0x0000037c                Lcd_Write_String
- .text.setup    0x000003a8       0x26 main.o
-                0x000003a8                setup
- .text.main     0x000003ce       0xc8 main.o
-                0x000003ce                main
+                0x0000036e       0x2c LCD/LCD.o
+                0x0000036e                Lcd_Write_String
+ .text.setup    0x0000039a       0x26 main.o
+                0x0000039a                setup
+ .text.main     0x000003c0       0xb8 main.o
+                0x000003c0                main
  .text.libgcc.div
-                0x00000496       0x44 d:/programas/microchip studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodsi4.o)
-                0x00000496                __udivmodsi4
+                0x00000478       0x44 d:/programas/microchip studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodsi4.o)
+                0x00000478                __udivmodsi4
  .text.avr-libc
-                0x000004da       0x60 d:/programas/microchip studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(snprintf.o)
-                0x000004da                snprintf
+                0x000004bc       0x60 d:/programas/microchip studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(snprintf.o)
+                0x000004bc                snprintf
  .text.avr-libc
-                0x0000053a      0x3c2 d:/programas/microchip studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(vfprintf_std.o)
-                0x0000053a                vfprintf
+                0x0000051c      0x3c2 d:/programas/microchip studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(vfprintf_std.o)
+                0x0000051c                vfprintf
  .text.avr-libc
-                0x000008fc       0x16 d:/programas/microchip studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(strnlen_P.o)
-                0x000008fc                strnlen_P
+                0x000008de       0x16 d:/programas/microchip studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(strnlen_P.o)
+                0x000008de                strnlen_P
  .text.avr-libc
-                0x00000912       0x16 d:/programas/microchip studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(strnlen.o)
-                0x00000912                strnlen
+                0x000008f4       0x16 d:/programas/microchip studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(strnlen.o)
+                0x000008f4                strnlen
  .text.avr-libc
-                0x00000928       0x78 d:/programas/microchip studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(fputc.o)
-                0x00000928                fputc
+                0x0000090a       0x78 d:/programas/microchip studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(fputc.o)
+                0x0000090a                fputc
  .text.avr-libc
-                0x000009a0       0xbc d:/programas/microchip studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(ultoa_invert.o)
-                0x000009a0                __ultoa_invert
+                0x00000982       0xbc d:/programas/microchip studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(ultoa_invert.o)
+                0x00000982                __ultoa_invert
  .text.libgcc.prologue
-                0x00000a5c       0x38 d:/programas/microchip studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_prologue.o)
-                0x00000a5c                __prologue_saves__
+                0x00000a3e       0x38 d:/programas/microchip studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_prologue.o)
+                0x00000a3e                __prologue_saves__
  .text.libgcc.prologue
-                0x00000a94       0x36 d:/programas/microchip studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_epilogue.o)
-                0x00000a94                __epilogue_restores__
-                0x00000aca                . = ALIGN (0x2)
+                0x00000a76       0x36 d:/programas/microchip studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_epilogue.o)
+                0x00000a76                __epilogue_restores__
+                0x00000aac                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x00000aca        0x0 d:/programas/microchip studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
-                0x00000aca                _exit
-                0x00000aca                exit
+ .fini9         0x00000aac        0x0 d:/programas/microchip studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
+                0x00000aac                _exit
+                0x00000aac                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -468,11 +468,11 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x00000aca        0x4 d:/programas/microchip studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
+ .fini0         0x00000aac        0x4 d:/programas/microchip studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
  *(.fini0)
-                0x00000ace                _etext = .
+                0x00000ab0                _etext = .
 
-.data           0x00800100       0x12 load address 0x00000ace
+.data           0x00800100       0x10 load address 0x00000ab0
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
@@ -480,30 +480,30 @@ END GROUP
  *(.rodata)
  *(.rodata*)
  .rodata.str1.1
-                0x00800100       0x12 main.o
+                0x00800100       0x10 main.o
  *(.gnu.linkonce.r*)
-                0x00800112                . = ALIGN (0x2)
-                0x00800112                _edata = .
-                0x00800112                PROVIDE (__data_end, .)
+                0x00800110                . = ALIGN (0x2)
+                0x00800110                _edata = .
+                0x00800110                PROVIDE (__data_end, .)
 
-.bss            0x00800112       0x14
-                0x00800112                PROVIDE (__bss_start, .)
+.bss            0x00800110       0x12
+                0x00800110                PROVIDE (__bss_start, .)
  *(.bss)
  *(.bss*)
  *(COMMON)
- COMMON         0x00800112       0x14 main.o
-                0x00800112                dato1
-                0x00800114                dato2
-                0x00800116                buffer
-                0x00800126                PROVIDE (__bss_end, .)
-                0x00000ace                __data_load_start = LOADADDR (.data)
-                0x00000ae0                __data_load_end = (__data_load_start + SIZEOF (.data))
+ COMMON         0x00800110       0x12 main.o
+                0x00800110                dato1
+                0x00800111                dato2
+                0x00800112                buffer
+                0x00800122                PROVIDE (__bss_end, .)
+                0x00000ab0                __data_load_start = LOADADDR (.data)
+                0x00000ac0                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x00800126        0x0
+.noinit         0x00800122        0x0
                 [!provide]                PROVIDE (__noinit_start, .)
  *(.noinit*)
                 [!provide]                PROVIDE (__noinit_end, .)
-                0x00800126                _end = .
+                0x00800122                _end = .
                 [!provide]                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x0

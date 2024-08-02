@@ -49,14 +49,7 @@ int main(void)
     {
 		
 		_delay_ms(10);
-		/*
-		if (dato == 1)
-		{
-			contador++;
-			PORTD = contador;
-			dato = 0;
-		}
-		*/
+	
 		
     }
 }
@@ -66,7 +59,7 @@ ISR(PCINT0_vect){
 	
 	
 	if(((PINB) & (1<<0)) == 0){   //Condicional que compara si se presionó el pulsador 1
-		_delay_ms(50);  //antirrebote
+		_delay_ms(60);  //antirrebote
 		contador ++;
 		
 		if (contador >= 15)
@@ -85,7 +78,7 @@ ISR(PCINT0_vect){
 	}
 	
 	if(((PINB) & (1<<1)) == 0){   //Condicional que compara si se presionó el pulsador  de start
-		_delay_ms(50);  //antirrebote
+		_delay_ms(60);  //antirrebote
 		
 		contador --;
 		

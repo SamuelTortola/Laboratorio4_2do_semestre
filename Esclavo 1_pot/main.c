@@ -69,3 +69,27 @@ ISR(ADC_vect){
 	ADCSRA |= (1<<ADIF); //Se borra la bandera de interrupción
 }
 
+ISR(TWI_vect){
+	uint8_t dato, estado;
+	
+	estado = TWSR & 0xFC;  //Lee el estado de la interfaz
+	
+	switch(estado){
+		case 0x60:
+		case 0x70:              //Direccionado con su direccion de esclavo
+		TWCR |= (1 << TWINT); //
+		break;
+		
+		case 0x80:
+		case 0x90:
+		dato = TWDR;  //Recibi? el dato, llamada general
+		PORTD = dato;
+		TWCR |= 1 << TWINT; //Borra la bandera TWINT
+		break;
+		default:    //Libera el BUS de cualquier errror
+		TWCR |= (1 << TWINT) | (1 << TWSTO);
+		
+	}
+	
+}
+

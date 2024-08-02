@@ -3,7 +3,7 @@
 
 uint8_t esclavo, dato, aux;
 
-
+#define SLA_R(address) ((address << 1) | 1)
 
 
 //********Datos a saber*****************
@@ -72,7 +72,7 @@ uint8_t I2C_inicio(){
 	
 	if (edo == 0x08 || edo == 0x10) 
 	{
-		return 0x01;
+		return 1;
 	}
 	
 	return edo;  
@@ -117,17 +117,19 @@ uint8_t I2C_READ(uint8_t *dato, uint8_t ack){
 	}
 	
 	else{
-		TWCR &= ~(1 << TWEA); //Lectura con nACK
+		TWCR &= ~(1 << TWEA); //Lectura con sin ACK
 	}
 	
 	TWCR |= (1 <<TWINT); //Inicia la lectura
 	while (!(TWCR & (1 << TWINT))); //Espera la bandera TWINT
 	edo = TWSR & 0xF8;   //Obtiene el estado
 	
-	if (edo == 0x58 || edo == 0x50)  //Dato leido con ACK, dato leido con nACK
+	if (edo == 0x58 || edo == 0x50)  //Dato leido con ACK, dato leido con sin ACK
 	{
 		*dato = TWDR;//Ubica el dato leido
-		return 0x01;
+		return 1;
+	
+		
 	}
 	
 	return edo;    //Si hay algun error
@@ -136,9 +138,9 @@ uint8_t I2C_READ(uint8_t *dato, uint8_t ack){
 
 
 
-void I2C_esclavo(uint8_t dato){
-	esclavo = 0x03;  //Dirección del esclavo
-	esclavo = esclavo << 1;    //Compone la SLA+W
+void I2C_esclavo(uint8_t dato, uint8_t direction){
+	esclavo = direction;  //Dirección del esclavo
+	esclavo = esclavo << 1;    //Compone la SLA+W*************************************************************************
 	
 	
 	aux = I2C_inicio();   //Condicion de inicio
@@ -159,4 +161,55 @@ void I2C_esclavo(uint8_t dato){
 	I2C_STOP();  //No continua, termina la comunicación y la cierra
 	
 	
+}
+
+
+
+
+
+
+// Lee un byte de datos del esclavo I2C
+uint8_t I2C_leer_dato(uint8_t direccion_esclavo, uint8_t *dato) {
+	// Iniciar condición de START
+	TWCR = (1 << TWSTA) | (1 << TWEN) | (1 << TWINT);
+	while (!(TWCR & (1 << TWINT))); // Esperar a que se complete
+
+	// Verificar condición de START
+	if ((TWSR & 0xF8) != TW_START) {
+		return 1; // Error: No se pudo iniciar la condición de START
+	}
+
+	// Enviar dirección del esclavo con bit de lectura
+	TWDR = SLA_R(direccion_esclavo);
+	TWCR = (1 << TWEN) | (1 << TWINT);
+	while (!(TWCR & (1 << TWINT))); // Esperar a que se complete la transmisión de la dirección
+
+	// Verificar ACK/NACK de la dirección
+	uint8_t twsr_value = TWSR & 0xF8;
+	if (twsr_value == TW_MR_SLA_NACK) {
+		I2C_STOP(); // Detener si se recibe un NACK
+		return 1; // Error: NACK recibido
+		} else if (twsr_value != TW_MR_SLA_ACK) {
+		I2C_STOP(); // Detener si otro estado inesperado
+		return 1; // Error: Estado inesperado
+	}
+
+	// Leer un byte del esclavo
+	TWCR = (1 << TWEN) | (1 << TWINT); // Leer sin ACK (NACK)
+	while (!(TWCR & (1 << TWINT))); // Esperar a que se complete la recepción
+
+	// Verificar estado de recepción
+	twsr_value = TWSR & 0xF8;
+	if (twsr_value != TW_MR_DATA_NACK && twsr_value != TW_MR_DATA_ACK) {
+		I2C_STOP(); // Detener si hay error en la recepción
+		return 1; // Error en la recepción
+	}
+
+	// Leer el dato recibido
+	*dato = TWDR;
+
+	// Generar condición de STOP
+      I2C_STOP();
+
+	return  *dato; // Éxito
 }

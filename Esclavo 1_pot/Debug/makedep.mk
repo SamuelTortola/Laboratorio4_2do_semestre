@@ -4,7 +4,7 @@
 
 ADC\ADC.c
 
-I2C\I2C.c
-
 main.c
+
+UART\UART.c
 

@@ -20,7 +20,7 @@
 
 #include "I2C/I2C.h"   //Incluir libreria de I2C
 
-int contador = 0;
+int contador = 0, dato;
 
 
 void setup(void);
@@ -38,6 +38,7 @@ void setup(void){
 	
 	
 	I2C_Config_SLAVE(0x03);   //Iniciar el I2C como esclavo, enviarle su dirección
+	
 	sei(); //Activar interrupciones
 }
 
@@ -48,6 +49,14 @@ int main(void)
     {
 		
 		_delay_ms(10);
+		/*
+		if (dato == 1)
+		{
+			contador++;
+			PORTD = contador;
+			dato = 0;
+		}
+		*/
 		
     }
 }
@@ -95,8 +104,8 @@ ISR(PCINT0_vect){
 	
 }
 
-ISR(TWI_vect){
-	uint8_t dato, estado;
+ISR(TWI_vect){           //Vector de interrupción de I2C
+	uint8_t estado;
 	
 	estado = TWSR & 0xFC;  //Lee el estado de la interfaz
 	
@@ -108,10 +117,20 @@ ISR(TWI_vect){
 			
 		case 0x80:
 		case 0x90:
-			dato = TWDR;  //Recibió el dato, llamada general
-			PORTD = dato; 
+			dato = TWDR;  //Recibió el dato, llamada general 
 			TWCR |= 1 << TWINT; //Borra la bandera TWINT
 			break;
+			
+		case 0xA8: // SLA+R recibido, maestro solicita lectura
+		case 0xB8: // Dato transmitido y ACK recibido
+			TWDR = contador; // Cargar el dato en el registro de datos*****************
+			TWCR |= (1 << TWINT) | (1 << TWEN) | (1 << TWIE)| (1 << TWEA); // Listo para la próxima operación
+		
+		case 0xC0: // Dato transmitido y NACK recibido
+		case 0xC8: // Último dato transmitido y ACK recibido
+			TWCR |= (1 << TWINT) | (1 << TWEN) | (1 << TWEA); // Listo para la próxima operación
+		break;
+		
 		default:    //Libera el BUS de cualquier errror
 			TWCR |= (1 << TWINT) | (1 << TWSTO);
 			

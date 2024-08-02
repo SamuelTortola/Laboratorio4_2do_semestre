@@ -10,7 +10,8 @@ I2C/I2C.d I2C/I2C.o: ../I2C/I2C.c ../I2C/I2C.h \
  d:\programas\microchip\ studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\version.h \
  d:\programas\microchip\ studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\fuse.h \
  d:\programas\microchip\ studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\lock.h \
- d:\programas\microchip\ studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h
+ d:\programas\microchip\ studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h \
+ d:\programas\microchip\ studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\util\twi.h
 
 ../I2C/I2C.h:
 
@@ -37,3 +38,5 @@ d:\programas\microchip\ studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include
 d:\programas\microchip\ studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\lock.h:
 
 d:\programas\microchip\ studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h:
+
+d:\programas\microchip\ studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\util\twi.h:

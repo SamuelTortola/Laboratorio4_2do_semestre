@@ -8,7 +8,10 @@
 //Última modificación: 29/07/2024
 //******************************************************************************
   //CODIGO DEL ESCLAVO QUE TIENE EL POTENCIÓMETRO
-
+  
+/////////////////////////////////////////////
+//Librerias Primarias
+/////////////////////////////////////////////
 
 #define F_CPU 16000000
 #include <avr/io.h>
@@ -18,15 +21,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
+/////////////////////////////////////////////
+//Librerias Secundarias
+/////////////////////////////////////////////
 #include "ADC/ADC.h"   //Incluir libreria de ADC
 #include "I2C/I2C.h"   //Incluir libreria de I2C
 
-
+/////////////////////////////////////////////
+//Variables
+/////////////////////////////////////////////
 
 uint8_t datoADC = 0;
 
-
+/////////////////////////////////////////////
+//Sub-Rutinas
+/////////////////////////////////////////////
 
 void setup(void);
 void setup(void){
@@ -35,13 +44,12 @@ void setup(void){
 	DDRC =0;  //Puerto C como entrada
 	initADC(); //Iniciar ADC
 	
+	
 	sei(); //Activar interrupciones
 }
-
-
-
-
-
+/////////////////////////////////////////////
+//Codigo Principal
+/////////////////////////////////////////////
 int main(void)
 {
     setup();
@@ -53,12 +61,11 @@ int main(void)
     }
 }
 
-
-
-
+/////////////////////////////////////////////
+//Vectores de interrupciones
+/////////////////////////////////////////////
 ISR(ADC_vect){
 	datoADC = ADCH;   //Lectura de potenciómetro
 	ADCSRA |= (1<<ADIF); //Se borra la bandera de interrupción
-	
 }
 

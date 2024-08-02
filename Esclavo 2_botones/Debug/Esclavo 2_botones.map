@@ -1,9 +1,18 @@
 Archive member included to satisfy reference by file (symbol)
 
+d:/programas/microchip studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodsi4.o)
+                              I2C/I2C.o (__udivmodsi4)
 d:/programas/microchip studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
                               D:/Programas/Microchip studio/7.0/Packs/Atmel/ATmega_DFP/2.1.506/gcc/dev/atmega328p/avr5/crtatmega328p.o (exit)
 d:/programas/microchip studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_clear_bss.o)
-                              main.o (__do_clear_bss)
+                              I2C/I2C.o (__do_clear_bss)
+
+Allocating common symbols
+Common symbol       size              file
+
+aux                 0x1               I2C/I2C.o
+dato                0x1               I2C/I2C.o
+esclavo             0x1               I2C/I2C.o
 
 Discarded input sections
 
@@ -12,12 +21,38 @@ Discarded input sections
  .text          0x00000000        0x0 I2C/I2C.o
  .data          0x00000000        0x0 I2C/I2C.o
  .bss           0x00000000        0x0 I2C/I2C.o
- .debug_line    0x00000000        0x0 I2C/I2C.o
- .debug_str     0x00000000      0x121 I2C/I2C.o
- .comment       0x00000000       0x31 I2C/I2C.o
+ .text.I2C_Config_MASTER
+                0x00000000       0xa4 I2C/I2C.o
+ .text.I2C_inicio
+                0x00000000       0x24 I2C/I2C.o
+ .text.I2C_EscByte
+                0x00000000       0x30 I2C/I2C.o
+ .text.I2C_STOP
+                0x00000000       0x10 I2C/I2C.o
+ .text.I2C_READ
+                0x00000000       0x4a I2C/I2C.o
+ .text.I2C_esclavo
+                0x00000000       0x46 I2C/I2C.o
+ COMMON         0x00000000        0x3 I2C/I2C.o
  .text          0x00000000        0x0 main.o
  .data          0x00000000        0x0 main.o
  .bss           0x00000000        0x0 main.o
+ .text          0x00000000        0x0 d:/programas/microchip studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodsi4.o)
+ .data          0x00000000        0x0 d:/programas/microchip studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodsi4.o)
+ .bss           0x00000000        0x0 d:/programas/microchip studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodsi4.o)
+ .text.libgcc.mul
+                0x00000000        0x0 d:/programas/microchip studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodsi4.o)
+ .text.libgcc.div
+                0x00000000       0x44 d:/programas/microchip studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodsi4.o)
+ .text.libgcc   0x00000000        0x0 d:/programas/microchip studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodsi4.o)
+ .text.libgcc.prologue
+                0x00000000        0x0 d:/programas/microchip studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodsi4.o)
+ .text.libgcc.builtins
+                0x00000000        0x0 d:/programas/microchip studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodsi4.o)
+ .text.libgcc.fmul
+                0x00000000        0x0 d:/programas/microchip studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodsi4.o)
+ .text.libgcc.fixed
+                0x00000000        0x0 d:/programas/microchip studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodsi4.o)
  .text          0x00000000        0x0 d:/programas/microchip studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
  .data          0x00000000        0x0 d:/programas/microchip studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
  .bss           0x00000000        0x0 d:/programas/microchip studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
@@ -178,7 +213,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000      0x18c
+.text           0x00000000      0x20c
  *(.vectors)
  .vectors       0x00000000       0x68 D:/Programas/Microchip studio/7.0/Packs/Atmel/ATmega_DFP/2.1.506/gcc/dev/atmega328p/avr5/crtatmega328p.o
                 0x00000000                __vector_default
@@ -237,7 +272,6 @@ END GROUP
  .text          0x0000008c        0x4 D:/Programas/Microchip studio/7.0/Packs/Atmel/ATmega_DFP/2.1.506/gcc/dev/atmega328p/avr5/crtatmega328p.o
                 0x0000008c                __vector_22
                 0x0000008c                __vector_1
-                0x0000008c                __vector_24
                 0x0000008c                __vector_12
                 0x0000008c                __bad_interrupt
                 0x0000008c                __vector_6
@@ -262,18 +296,24 @@ END GROUP
                 0x0000008c                __vector_20
                 0x00000090                . = ALIGN (0x2)
  *(.text.*)
- .text.setup    0x00000090       0x28 main.o
-                0x00000090                setup
- .text.main     0x000000b8       0x12 main.o
-                0x000000b8                main
+ .text.I2C_Config_SLAVE
+                0x00000090       0x16 I2C/I2C.o
+                0x00000090                I2C_Config_SLAVE
+ .text.setup    0x000000a6       0x2e main.o
+                0x000000a6                setup
+ .text.main     0x000000d4       0x12 main.o
+                0x000000d4                main
  .text.__vector_3
-                0x000000ca       0xbe main.o
-                0x000000ca                __vector_3
-                0x00000188                . = ALIGN (0x2)
+                0x000000e6       0xbe main.o
+                0x000000e6                __vector_3
+ .text.__vector_24
+                0x000001a4       0x64 main.o
+                0x000001a4                __vector_24
+                0x00000208                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x00000188        0x0 d:/programas/microchip studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
-                0x00000188                _exit
-                0x00000188                exit
+ .fini9         0x00000208        0x0 d:/programas/microchip studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
+                0x00000208                _exit
+                0x00000208                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -292,11 +332,11 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x00000188        0x4 d:/programas/microchip studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
+ .fini0         0x00000208        0x4 d:/programas/microchip studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
  *(.fini0)
-                0x0000018c                _etext = .
+                0x0000020c                _etext = .
 
-.data           0x00800100        0x0 load address 0x0000018c
+.data           0x00800100        0x0 load address 0x0000020c
                 [!provide]                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
@@ -316,8 +356,8 @@ END GROUP
                 0x00800100                contador
  *(COMMON)
                 0x00800102                PROVIDE (__bss_end, .)
-                0x0000018c                __data_load_start = LOADADDR (.data)
-                0x0000018c                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x0000020c                __data_load_start = LOADADDR (.data)
+                0x0000020c                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x00800102        0x0
                 [!provide]                PROVIDE (__noinit_start, .)
@@ -365,8 +405,9 @@ END GROUP
 
 .comment        0x00000000       0x30
  *(.comment)
- .comment       0x00000000       0x30 main.o
+ .comment       0x00000000       0x30 I2C/I2C.o
                                  0x31 (size before relaxing)
+ .comment       0x00000030       0x31 main.o
 
 .note.gnu.avr.deviceinfo
                 0x00000000       0x40
@@ -388,42 +429,51 @@ END GROUP
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000       0x30
+.debug_aranges  0x00000000       0x88
  *(.debug_aranges)
  .debug_aranges
-                0x00000000       0x30 main.o
+                0x00000000       0x50 I2C/I2C.o
+ .debug_aranges
+                0x00000050       0x38 main.o
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000      0x83a
+.debug_info     0x00000000      0xad2
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x5f4 D:/Programas/Microchip studio/7.0/Packs/Atmel/ATmega_DFP/2.1.506/gcc/dev/atmega328p/avr5/crtatmega328p.o
- .debug_info    0x000005f4      0x246 main.o
+ .debug_info    0x000005f4      0x23e I2C/I2C.o
+ .debug_info    0x00000832      0x2a0 main.o
 
-.debug_abbrev   0x00000000      0x6da
+.debug_abbrev   0x00000000      0x867
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x5a2 D:/Programas/Microchip studio/7.0/Packs/Atmel/ATmega_DFP/2.1.506/gcc/dev/atmega328p/avr5/crtatmega328p.o
- .debug_abbrev  0x000005a2      0x138 main.o
+ .debug_abbrev  0x000005a2      0x153 I2C/I2C.o
+ .debug_abbrev  0x000006f5      0x172 main.o
 
-.debug_line     0x00000000      0x316
+.debug_line     0x00000000      0x61c
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x134 D:/Programas/Microchip studio/7.0/Packs/Atmel/ATmega_DFP/2.1.506/gcc/dev/atmega328p/avr5/crtatmega328p.o
- .debug_line    0x00000134      0x1e2 main.o
+ .debug_line    0x00000134      0x2a1 I2C/I2C.o
+ .debug_line    0x000003d5      0x247 main.o
 
-.debug_frame    0x00000000       0x60
+.debug_frame    0x00000000      0x120
  *(.debug_frame)
- .debug_frame   0x00000000       0x60 main.o
+ .debug_frame   0x00000000       0x94 I2C/I2C.o
+ .debug_frame   0x00000094       0x8c main.o
 
-.debug_str      0x00000000      0x3cd
+.debug_str      0x00000000      0x466
  *(.debug_str)
  .debug_str     0x00000000      0x208 D:/Programas/Microchip studio/7.0/Packs/Atmel/ATmega_DFP/2.1.506/gcc/dev/atmega328p/avr5/crtatmega328p.o
- .debug_str     0x00000208      0x1c5 main.o
-                                0x1fe (size before relaxing)
+ .debug_str     0x00000208      0x1d5 I2C/I2C.o
+                                0x211 (size before relaxing)
+ .debug_str     0x000003dd       0x89 main.o
+                                0x227 (size before relaxing)
 
-.debug_loc      0x00000000      0x176
+.debug_loc      0x00000000      0x39a
  *(.debug_loc)
- .debug_loc     0x00000000      0x176 main.o
+ .debug_loc     0x00000000      0x186 I2C/I2C.o
+ .debug_loc     0x00000186      0x214 main.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -443,9 +493,10 @@ END GROUP
 .debug_pubtypes
  *(.debug_pubtypes)
 
-.debug_ranges   0x00000000       0x20
+.debug_ranges   0x00000000       0x68
  *(.debug_ranges)
- .debug_ranges  0x00000000       0x20 main.o
+ .debug_ranges  0x00000000       0x40 I2C/I2C.o
+ .debug_ranges  0x00000040       0x28 main.o
 
 .debug_macro
  *(.debug_macro)

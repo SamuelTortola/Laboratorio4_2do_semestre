@@ -18,7 +18,8 @@ main.d main.o: .././main.c \
  d:\programas\microchip\ studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdarg.h \
  d:\programas\microchip\ studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stddef.h \
  d:\programas\microchip\ studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdlib.h \
- .././I2C/I2C.h
+ .././I2C/I2C.h \
+ d:\programas\microchip\ studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h
 
 d:\programas\microchip\ studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\io.h:
 
@@ -59,3 +60,5 @@ d:\programas\microchip\ studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr
 d:\programas\microchip\ studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdlib.h:
 
 .././I2C/I2C.h:
+
+d:\programas\microchip\ studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h:

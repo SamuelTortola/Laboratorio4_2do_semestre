@@ -5,7 +5,7 @@
 // Proyecto: Laboratorio 3
 // Hardware: Atmega238p
 // Creado: 26/07/2024
-//Última modificación: 29/07/2024
+//Última modificación: 2/08/2024
 //******************************************************************************
   //CODIGO DEL ESCLAVO QUE TIENE LOS BOTONES
 
@@ -22,6 +22,7 @@
 
 int contador = 0;
 
+
 void setup(void);
 void setup(void){
 	DDRB = 0b00000000;   //PB0, PB1 como entrada de pulsadores
@@ -35,6 +36,8 @@ void setup(void){
 	PCMSK0 |= (1 << 0)|(1 << 1); //PCINT0, PCINT1
 	PCICR |= (1 << 0); //Mascara de interrupción
 	
+	
+	I2C_Config_SLAVE(0x03);   //Iniciar el I2C como esclavo, enviarle su dirección
 	sei(); //Activar interrupciones
 }
 
@@ -90,7 +93,29 @@ ISR(PCINT0_vect){
 		
 	}
 	
+}
+
+ISR(TWI_vect){
+	uint8_t dato, estado;
 	
+	estado = TWSR & 0xFC;  //Lee el estado de la interfaz
+	
+	switch(estado){
+		case 0x60:
+		case 0x70:              //Direccionado con su direccion de esclavo
+			TWCR |= (1 << TWINT); //
+			break;
+			
+		case 0x80:
+		case 0x90:
+			dato = TWDR;  //Recibió el dato, llamada general
+			PORTD = dato; 
+			TWCR |= 1 << TWINT; //Borra la bandera TWINT
+			break;
+		default:    //Libera el BUS de cualquier errror
+			TWCR |= (1 << TWINT) | (1 << TWSTO);
+			
+	}
 	
 }
 

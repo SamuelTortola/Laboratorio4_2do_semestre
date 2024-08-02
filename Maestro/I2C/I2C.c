@@ -108,33 +108,7 @@ void I2C_STOP(){
 	while (TWCR & (1 << TWSTO));  //El bit se limpia por HW
 }
 
-uint8_t I2C_READ(uint8_t *dato, uint8_t ack){
-	uint8_t edo;
-	
-	if (ack)
-	{
-		TWCR |= (1 << TWEA); //Lectura con ACK
-	}
-	
-	else{
-		TWCR &= ~(1 << TWEA); //Lectura con sin ACK
-	}
-	
-	TWCR |= (1 <<TWINT); //Inicia la lectura
-	while (!(TWCR & (1 << TWINT))); //Espera la bandera TWINT
-	edo = TWSR & 0xF8;   //Obtiene el estado
-	
-	if (edo == 0x58 || edo == 0x50)  //Dato leido con ACK, dato leido con sin ACK
-	{
-		*dato = TWDR;//Ubica el dato leido
-		return 1;
-	
-		
-	}
-	
-	return edo;    //Si hay algun error
-	
-}
+
 
 
 
@@ -210,6 +184,6 @@ uint8_t I2C_leer_dato(uint8_t direccion_esclavo, uint8_t *dato) {
 
 	// Generar condición de STOP
       I2C_STOP();
-
+  
 	return  *dato; // Éxito
 }

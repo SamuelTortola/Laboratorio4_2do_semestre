@@ -7,96 +7,97 @@
 // Creado: 26/07/2024
 //Última modificación: 29/07/2024
 //******************************************************************************
-// CODIGO DEL ESCLAVO QUE TIENE EL POTENCIÓMETRO
+  //CODIGO DEL ESCLAVO QUE TIENE EL POTENCIÓMETRO
+  
+/////////////////////////////////////////////
+//Librerias Primarias
+/////////////////////////////////////////////
 
-#define F_CPU 16000000UL
-#define BAUD 9600
-#define MY_UBRR F_CPU/16/BAUD-1
-
+#define F_CPU 16000000
 #include <avr/io.h>
 #include <stdint.h>
 #include <util/delay.h>
 #include <avr/interrupt.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "ADC/ADC.h"
-#include "UART/UART.h"
 
+/////////////////////////////////////////////
+//Librerias Secundarias
+/////////////////////////////////////////////
+#include "ADC/ADC.h"   //Incluir libreria de ADC
+#include "I2C/I2C.h"   //Incluir libreria de I2C
 
-////////////////////////////////////////////////////
-// Variables.
-////////////////////////////////////////////////////
-char buffer[64];  // Buffer para las cadenas de caracteres a mostrar en el LCD y UART
-volatile uint16_t datoADC = 0; // Declarar como volatile para uso en ISR
+/////////////////////////////////////////////
+//Variables
+/////////////////////////////////////////////
+uint8_t datoADC = 0, dato;
+/////////////////////////////////////////////
+//Sub-Rutinas
+/////////////////////////////////////////////
 
-////////////////////////////////////////////////////
-// Prototipos de funciones
-////////////////////////////////////////////////////
-void display_menu(void);
-void process_command(char command);
 void setup(void);
-
-////////////////////////////////////////////////////
-// Sub-Rutinas
-////////////////////////////////////////////////////
 void setup(void){
-    cli();  // Desactivar interrupciones
-    DDRC = 0;  // Puerto C como entrada
-    initADC(); // Iniciar ADC
-    UART_Init(BAUD);  // Inicializar UART
-    //I2C_Config_SLAVE(0x02); // Inicializar I2C como esclavo con dirección 0x02
-    display_menu(); // Mostrar el menú inicial en la consola
-    sei(); // Activar interrupciones
+	
+	cli();  //Apagar interrupciones
+	DDRC =0;  //Puerto C como entrada
+	initADC(); //Iniciar ADC
+	
+	I2C_Config_SLAVE(0x02);
+	sei(); //Activar interrupciones
 }
 
-////////////////////////////////////////////////////
-// Programa Principal
-////////////////////////////////////////////////////
-int main(void) {
+/////////////////////////////////////////////
+//Codigo Principal
+/////////////////////////////////////////////
+int main(void)
+{
     setup();
-
-    while (1) {
-        // Leer ADC y actualizar datoADC en la ISR
-        ADCSRA |= (1 << ADSC);  // Iniciar conversión ADC
-        _delay_ms(20);   // Retardo para evitar malos procesamientos del Atmega
-
-        // Leer y procesar los comandos de la UART
-        if (UCSR0A & (1 << RXC0)) {  // Verificar si hay datos disponibles en el buffer de recepción
-            char received_char = UART_Receive();
-            process_command(received_char);
-        }
-
-        _delay_ms(500);  // Espera medio segundo antes de la siguiente actualización
+	
+    while (1) 
+    {
+		ADCSRA |=(1<<ADSC);  //Leer ADC
+		_delay_ms(20);   //Retardo para evitar malos procesamientos del Atmega328P
     }
 }
 
-////////////////////////////////////////////////////
-// Vectores de interrupciones
-////////////////////////////////////////////////////
-ISR(ADC_vect) {
-    datoADC = ADC;  // Lectura de potenciómetro (16 bits: ADCL y ADCH)
-    ADCSRA |= (1 << ADIF); // Borrar la bandera de interrupción
+/////////////////////////////////////////////
+//Vectores de interrupciones
+/////////////////////////////////////////////
+ISR(ADC_vect){
+	datoADC = ADCH;   //Lectura de potenciómetro
+	ADCSRA |= (1<<ADIF); //Se borra la bandera de interrupción
 }
 
-////////////////////////////////////////////////////
-// Funciones auxiliares
-////////////////////////////////////////////////////
-void display_menu(void) {
-    UART_TransmitString("\r\n***** Menu *****\r\n");
-    UART_TransmitString("1. Mostrar valores de ADC\r\n");
-    UART_TransmitString("*****************\r\n");
-    UART_TransmitString("Seleccione una opción: ");
-}
-
-void process_command(char command) {
-    switch (command) {
-        case '1':
-            snprintf(buffer, sizeof(buffer), "Valores ADC: %u\r\n", datoADC);
-            UART_TransmitString(buffer);
-            break;
-        default:
-            UART_TransmitString("Opción inválida. Por favor, seleccione una opción válida.\r\n");
-            break;
-    }
-    display_menu();
+ISR(TWI_vect){           //Vector de interrupci?n de I2C
+	uint8_t estado;
+	
+	estado = TWSR & 0xFC;  //Lee el estado de la interfaz
+	
+	switch(estado){
+		case 0x60:
+		case 0x70:              //Direccionado con su direccion de esclavo
+		TWCR |= (1 << TWINT); //
+		break;
+		
+		case 0x80:
+		case 0x90:
+		dato = TWDR;  //Recibi? el dato, llamada general
+		TWCR |= 1 << TWINT; //Borra la bandera TWINT
+		break;
+		
+		case 0xA8: // SLA+R recibido, maestro solicita lectura
+		case 0xB8: // Dato transmitido y ACK recibido
+		TWDR = datoADC; // Cargar el dato en el registro de datos*****************
+		TWCR |= (1 << TWINT) | (1 << TWEN) | (1 << TWIE)| (1 << TWEA); // Listo para la pr?xima operaci?n
+		
+		case 0xC0: // Dato transmitido y NACK recibido
+		case 0xC8: // ?ltimo dato transmitido y ACK recibido
+		TWCR |= (1 << TWINT) | (1 << TWEN) | (1 << TWEA); // Listo para la pr?xima operaci?n
+		break;
+		
+		default:    //Libera el BUS de cualquier errror
+		TWCR |= (1 << TWINT) | (1 << TWSTO);
+		
+	}
+	
 }

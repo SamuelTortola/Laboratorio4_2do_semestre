@@ -54,26 +54,106 @@ int main(void)
    setup();
     while (1) 
     {
-		  _delay_ms(1000);
+		  _delay_ms(10);
 		  Lcd_Set_Cursor(0,3);
 		  Lcd_Write_String("S1:");
 		  Lcd_Set_Cursor(0,10);
 		  Lcd_Write_String("S2:");
 		
-		//  I2C_esclavo(1, esclavo1);
+		//  I2C_esclavo(1, esclavo1); //Por si se desea enviar un valor a algún esclavo
 		  
 		  
 		  dato_leido = I2C_leer_dato(esclavo1, &dato1);
 		 
-		  if (dato_leido == 2) {
-			   Lcd_Set_Cursor(1,10);
-			   Lcd_Write_String("2");
-			  } 
-			  
-		else{
-			 Lcd_Set_Cursor(1,10);
-			 Lcd_Write_String("1");
-		}
+		 
+		 switch(dato_leido){
+			 case 0:
+				 Lcd_Set_Cursor(1,10);
+				 Lcd_Write_String("00");
+				 break;
+				 
+			 case 1:
+				 Lcd_Set_Cursor(1,10);
+				 Lcd_Write_String("01");
+				 break;
+				 
+			 case 2:
+				 Lcd_Set_Cursor(1,10);
+				 Lcd_Write_String("02");
+				 break;
+			 
+			 case 3:
+				 Lcd_Set_Cursor(1,10);
+				 Lcd_Write_String("03");
+				 break;
+				 
+			case 4:
+				 Lcd_Set_Cursor(1,10);
+				 Lcd_Write_String("04");
+				 break;
+				 
+			 case 5:
+				 Lcd_Set_Cursor(1,10);
+				 Lcd_Write_String("05");
+				 break;
+				 
+			 case 6:
+				 Lcd_Set_Cursor(1,10);
+				 Lcd_Write_String("06");
+				 break;
+			 
+			 case 7:
+				 Lcd_Set_Cursor(1,10);
+				 Lcd_Write_String("07");
+				 break;
+				 
+			case 8:
+				Lcd_Set_Cursor(1,10);
+				Lcd_Write_String("08");
+				break;
+			
+			case 9:
+				Lcd_Set_Cursor(1,10);
+				Lcd_Write_String("09");
+				break;
+			
+			case 10:
+				Lcd_Set_Cursor(1,10);
+				Lcd_Write_String("10");
+				break;
+			
+			case 11:
+				Lcd_Set_Cursor(1,10);
+				Lcd_Write_String("11");
+				break;
+			
+			case 12:
+				Lcd_Set_Cursor(1,10);
+				Lcd_Write_String("12");
+				break;
+			
+			case 13:
+				Lcd_Set_Cursor(1,10);
+				Lcd_Write_String("13");
+				break;
+			
+			case 14:
+				Lcd_Set_Cursor(1,10);
+				Lcd_Write_String("14");
+				break;
+			
+			case 15:
+				Lcd_Set_Cursor(1,10);
+				Lcd_Write_String("15");
+				break;
+			default:
+				
+				break;
+				
+		 }
+		 
+		 
+		
 			  
 		
 		

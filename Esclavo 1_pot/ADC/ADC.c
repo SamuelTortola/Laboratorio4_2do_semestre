@@ -4,6 +4,8 @@ void initADC(){
 	
 	ADMUX = 0;
 	DIDR0 |= (1 <<ADC0D);	//desabilitar el A0 como digital
+	DIDR0 |= (1<<ADC1D);     //desabilitar el A1 como digital
+
 
 	//JUSTIFICACION IZQUIERDA
 	ADMUX |= (1<<ADLAR);

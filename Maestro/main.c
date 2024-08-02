@@ -27,8 +27,9 @@
 # define esclavo1 0x03  //Dirección del esclavo 1
 # define esclavo2 0x02   //Dirección del esclavo 2
 
-uint8_t dato1; //Variable para almacenar el dato que envia el esclavo
-uint8_t dato_leido; //Variable que almacena el valor en si
+uint8_t dato1, dato2; //Variable para almacenar el dato que envia el esclavo
+uint8_t dato_leido_1, dato_leido_2; //Variable que almacena el valor en si
+char buffer[64];  // Buffer para las cadenas de caracteres a mostrar en el LCD
 
 
 void setup(void);
@@ -63,10 +64,16 @@ int main(void)
 		//  I2C_esclavo(1, esclavo1); //Por si se desea enviar un valor a algún esclavo
 		  
 		  
-		  dato_leido = I2C_leer_dato(esclavo1, &dato1);
+		  dato_leido_1 = I2C_leer_dato(esclavo1, &dato1);
+		  dato_leido_2 = I2C_leer_dato(esclavo2, &dato2);
 		 
+		 Lcd_Set_Cursor(1,3);
+		 snprintf(buffer, 16, "%d", dato_leido_2);
+		 Lcd_Write_String(buffer);
+		
+	
 		 
-		 switch(dato_leido){
+		 switch(dato_leido_1){
 			 case 0:
 				 Lcd_Set_Cursor(1,10);
 				 Lcd_Write_String("00");

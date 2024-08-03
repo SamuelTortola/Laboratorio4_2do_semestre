@@ -1,11 +1,14 @@
-#ifndef UART_H
-#define UART_H
+
+#ifndef UART_H_
+#define UART_H_
 
 #include <avr/io.h>
 #include <stdint.h>
 
-void UART_init(uint32_t baudrate);
-void UART_sendChar(char c);
-void UART_sendString(const char* str);
+void initUART9600();
+void writeUART(char Caracter);
+void writeTextUART(char * Texto);
 
-#endif // UART_H
+
+
+#endif

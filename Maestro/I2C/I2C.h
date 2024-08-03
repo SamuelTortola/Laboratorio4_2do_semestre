@@ -13,6 +13,8 @@
  uint8_t I2C_inicio();
  uint8_t I2C_EscByte(uint8_t dato);
  void I2C_STOP();
- int I2C_leer_dato(uint8_t direccion_esclavo, int *dato);
+
+ 
+ uint8_t I2C_leer_dato(uint8_t direccion_esclavo, uint8_t *dato);
 
 #endif 
